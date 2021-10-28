@@ -1,9 +1,13 @@
+import 'react-native-gesture-handler';
 import React, { useState } from 'react'
 import * as Fonts from 'expo-font'
 import Home from './screens/home'
 import AppLoading from 'expo-app-loading'
+import { NavigationContainer } from '@react-navigation/native'
+import HomeNavigator from './routes/homeNavigator'
+import DrawerNavigator from './routes/drawerNavigator'
+import { ImageBackground } from 'react-native';
 
-import Navigator from './routes/homestack'
 
 const getFonts = () => {
   Fonts.loadAsync({
@@ -18,7 +22,10 @@ export default function App() {
 
   if(fontsLoaded){
     return (
-      <Navigator />
+      <NavigationContainer>
+        
+          <DrawerNavigator/>
+      </NavigationContainer>
     )
   }
   else{
