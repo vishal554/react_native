@@ -4,10 +4,12 @@ import * as Fonts from 'expo-font'
 import Home from './screens/home'
 import AppLoading from 'expo-app-loading'
 import { NavigationContainer } from '@react-navigation/native'
-import HomeNavigator from './routes/homeNavigator'
 import DrawerNavigator from './routes/drawerNavigator'
-import { ImageBackground } from 'react-native';
+import { Provider } from 'react-redux'
+import {createStore} from 'redux'
+import reducer from './state/reducers/reducer';
 
+const store = createStore(reducer)
 
 const getFonts = () => {
   Fonts.loadAsync({
@@ -22,10 +24,11 @@ export default function App() {
 
   if(fontsLoaded){
     return (
-      <NavigationContainer>
-        
-          <DrawerNavigator/>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+            <DrawerNavigator/>
+        </NavigationContainer>
+      </Provider>
     )
   }
   else{

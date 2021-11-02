@@ -4,27 +4,12 @@ import { FlatList, TouchableOpacity, TouchableWithoutFeedback } from 'react-nati
 import { MaterialIcons } from '@expo/vector-icons'
 import Card from '../shared/card'
 import ReviewForm from './reviewForm';
-
-export default function Home( { navigation } ) {
+import { connect } from 'react-redux'
+const Home = ( { navigation, movies, submitForm } ) => {
   
   const [isOpened, setIsOpened] = useState(false)
 
-  const [movies, setMovies] = useState([
-    {title:'The lord of the rings', rating:4, body: 'at node8:41 in callReactNativeMicrotasks', key:'1'},
-    {title:'The lord of the rings part 2', rating:3, body: 'at node8:41 in callReactNativeMicrotasks', key:'2'},
-    {title:'Se7en', rating:2, body: 'at node8:41 in callReactNativeMicrotasks', key:'3'},
-    {title:'Memento', rating:5, body: 'at node8:41 in callReactNativeMicrotasks', key:'4'},
-    
-  ])
-
-  const addMovie = (values) => {
-    values.key = Math.random().toString()
-    setMovies((prevState) => {
-      return [values, ...prevState]
-    })
-    setIsOpened(false)
-  }
-
+  
   return (
     <View>
         <Modal visible={isOpened} 
@@ -37,7 +22,7 @@ export default function Home( { navigation } ) {
             size={24}
           />
           
-          <ReviewForm addMovie={addMovie} />
+          <ReviewForm addMovie={submitForm} setIsOpened={setIsOpened}/>
           
         </Modal>
 
@@ -62,6 +47,20 @@ export default function Home( { navigation } ) {
       
     )
 }
+
+function mapStateToProps(state){
+  return {
+    movies: state.movies
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    submitForm: (values) => dispatch({type:'SUBMIT_FORM', data: values})
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
   materialicon:{

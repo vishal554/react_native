@@ -6,7 +6,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import * as yup from 'yup'
 
 
-export default function ReviewForm({ addMovie }){
+export default function ReviewForm({ addMovie, setIsOpened }){
 
     const validationSchema = yup.object({
         title: yup.string().required().min(4),
@@ -24,6 +24,7 @@ export default function ReviewForm({ addMovie }){
                 onSubmit={(values, actions) => { 
                     actions.resetForm()
                     addMovie(values)
+                    setIsOpened(false)
 
                 }}
                 validationSchema={validationSchema}
